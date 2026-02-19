@@ -1,0 +1,12 @@
+D:\DOT_Backend\SuperMarket.Domain\obj\Debug\net10.0\SuperMarket.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\DOT_Backend\SuperMarket.Domain\obj\Debug\net10.0\SuperMarket.Domain.AssemblyInfoInputs.cache
+D:\DOT_Backend\SuperMarket.Domain\obj\Debug\net10.0\SuperMarket.Domain.AssemblyInfo.cs
+D:\DOT_Backend\SuperMarket.Domain\obj\Debug\net10.0\SuperMarket.Domain.csproj.CoreCompileInputs.cache
+D:\DOT_Backend\SuperMarket.Domain\obj\Debug\net10.0\SuperMarket.Domain.sourcelink.json
+D:\DOT_Backend\SuperMarket.Domain\bin\Debug\net10.0\SuperMarket.Domain.deps.json
+D:\DOT_Backend\SuperMarket.Domain\bin\Debug\net10.0\SuperMarket.Domain.dll
+D:\DOT_Backend\SuperMarket.Domain\bin\Debug\net10.0\SuperMarket.Domain.pdb
+D:\DOT_Backend\SuperMarket.Domain\obj\Debug\net10.0\SuperMarket.Domain.dll
+D:\DOT_Backend\SuperMarket.Domain\obj\Debug\net10.0\refint\SuperMarket.Domain.dll
+D:\DOT_Backend\SuperMarket.Domain\obj\Debug\net10.0\SuperMarket.Domain.pdb
+D:\DOT_Backend\SuperMarket.Domain\obj\Debug\net10.0\ref\SuperMarket.Domain.dll

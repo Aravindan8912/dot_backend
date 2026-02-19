@@ -1,0 +1,16 @@
+D:\DOT_Backend\SuperMarket.Application\obj\Debug\net10.0\SuperMarket.Application.csproj.AssemblyReference.cache
+D:\DOT_Backend\SuperMarket.Application\obj\Debug\net10.0\SuperMarket.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\DOT_Backend\SuperMarket.Application\obj\Debug\net10.0\SuperMarket.Application.AssemblyInfoInputs.cache
+D:\DOT_Backend\SuperMarket.Application\obj\Debug\net10.0\SuperMarket.Application.AssemblyInfo.cs
+D:\DOT_Backend\SuperMarket.Application\obj\Debug\net10.0\SuperMarket.Application.csproj.CoreCompileInputs.cache
+D:\DOT_Backend\SuperMarket.Application\obj\Debug\net10.0\SuperMarket.Application.sourcelink.json
+D:\DOT_Backend\SuperMarket.Application\bin\Debug\net10.0\SuperMarket.Application.deps.json
+D:\DOT_Backend\SuperMarket.Application\bin\Debug\net10.0\SuperMarket.Application.dll
+D:\DOT_Backend\SuperMarket.Application\bin\Debug\net10.0\SuperMarket.Application.pdb
+D:\DOT_Backend\SuperMarket.Application\bin\Debug\net10.0\SuperMarket.Domain.dll
+D:\DOT_Backend\SuperMarket.Application\bin\Debug\net10.0\SuperMarket.Domain.pdb
+D:\DOT_Backend\SuperMarket.Application\obj\Debug\net10.0\SuperMar.2AD9CD37.Up2Date
+D:\DOT_Backend\SuperMarket.Application\obj\Debug\net10.0\SuperMarket.Application.dll
+D:\DOT_Backend\SuperMarket.Application\obj\Debug\net10.0\refint\SuperMarket.Application.dll
+D:\DOT_Backend\SuperMarket.Application\obj\Debug\net10.0\SuperMarket.Application.pdb
+D:\DOT_Backend\SuperMarket.Application\obj\Debug\net10.0\ref\SuperMarket.Application.dll
