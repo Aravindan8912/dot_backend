@@ -1,41 +1,36 @@
-var builder = WebApplication.CreateBuilder(args);
+using SuperMarket.Infrastructure;
+using SuperMarket.Application.UseCases.Categories;
+using SuperMarket.Application.UseCases.Customers;
+using SuperMarket.Application.UseCases.Products;
+using SuperMarket.Application.UseCases.Orders;
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+
+var builder=WebApplication.CreateBuilder(args);
+
+//add service
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi(); // Replaces Swashbuckle (not yet compatible with .NET 10)
+
+//Register Infrastructure
+
+builder.Services.AddInfrastructure(builder.Configuration);
+
+//register UseCase
+
+builder.Services.AddScoped<CreateCategoryUseCase>();
+builder.Services.AddScoped<CreateCustomerUseCase>();
+builder.Services.AddScoped<CreateProductUseCase>();
+builder.Services.AddScoped<CreateOrderUseCase>();
+builder.Services.AddScoped<UpdateProductUseCase>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
-
+app.MapOpenApi(); // OpenAPI spec at /openapi/v1.json
 app.UseHttpsRedirection();
+app.UseAuthorization();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
