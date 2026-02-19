@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="SuperMarket.API/SuperMarket.API.csproj" />
+  <Project Path="SuperMarket.Application/SuperMarket.Application.csproj" />
+  <Project Path="SuperMarket.Domain/SuperMarket.Domain.csproj" />
+  <Project Path="SuperMarket.Infrastructure/SuperMarket.Infrastructure.csproj" />
+</Solution>
