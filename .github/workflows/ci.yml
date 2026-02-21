@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, develop]
+    branches: [ main, develop ]
   pull_request:
-    branches: [main, develop]
+    branches: [ main, develop ]
 
 env:
   DOTNET_VERSION: "10.0.x"
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup .NET
@@ -39,7 +39,7 @@ jobs:
       - name: Publish API
         run: dotnet publish SuperMarket.API/SuperMarket.API.csproj -c Release -o ./publish --no-build
 
-      - name: Upload API artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: supermarket-api
