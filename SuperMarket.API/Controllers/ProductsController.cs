@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SuperMarket.API.Requests;
 using SuperMarket.Application.DTOs;
@@ -8,6 +9,7 @@ namespace SuperMarket.API.Controllers;
 
 [ApiController]
 [Route("api/products")]
+[Authorize(Roles = "Admin,User")]
 public class ProductsController : ControllerBase
 {
     private readonly IProductRepository _productRepository;
