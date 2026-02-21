@@ -228,6 +228,20 @@ All endpoints require **Admin or User**.
 
 ---
 
+## Docker: MySQL only
+
+Only **MySQL** runs in Docker. The API runs locally with `dotnet run`.
+
+**Step-by-step:** see **[RUN-WITH-MYSQL-DOCKER.md](RUN-WITH-MYSQL-DOCKER.md)**.
+
+Quick version:
+
+1. Start MySQL: `docker compose up -d`
+2. Run API: `dotnet run --project SuperMarket.API`
+3. API: http://localhost:3000
+
+---
+
 ## How to Run This Project (Full Dependency Guide)
 
 ### 1. Prerequisites
