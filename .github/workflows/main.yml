@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  DOTNET_VERSION: "10.0.x"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore
+        run: dotnet restore SuperMarket.slnx
+
+      - name: Build
+        run: dotnet build SuperMarket.slnx --no-restore -c Release
+
+      - name: Publish API
+        run: dotnet publish SuperMarket.API/SuperMarket.API.csproj -c Release -o ./publish --no-build
+
+      - name: Upload API artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: supermarket-api
+          path: ./publish
