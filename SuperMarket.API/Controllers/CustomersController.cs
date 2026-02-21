@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SuperMarket.API.Requests;
 using SuperMarket.Application.Interfaces;
@@ -7,6 +8,7 @@ namespace SuperMarket.API.Controllers;
 
 [ApiController]
 [Route("api/customers")]
+[Authorize(Roles = "Admin,User")]
 public class CustomersController : ControllerBase
 {
     private readonly ICustomerRepository _customerRepository;
@@ -19,10 +21,27 @@ public class CustomersController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateCustomerRequest request)
+    public async Task<IActionResult> Create(CreateCustomerRequest request, CancellationToken cancellationToken)
     {
-        var customer = await _createCustomerUseCase.ExecuteAsync(request.Name, request.Email, request.Phone);
-        return Ok(customer);
+        try
+        {
+            var customer = await _createCustomerUseCase.ExecuteAsync(
+                request.Name,
+                request.Email,
+                request.Phone,
+                request.Password,
+                request.Role,
+                cancellationToken);
+            return Ok(customer);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(ex.Message);
+        }
+        catch (ArgumentException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpGet]

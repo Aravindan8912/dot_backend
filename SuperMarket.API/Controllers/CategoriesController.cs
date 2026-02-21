@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SuperMarket.API.Requests;
 using SuperMarket.Application.Interfaces;
@@ -7,6 +8,7 @@ namespace SuperMarket.API.Controllers;
 
 [ApiController]
 [Route("api/categories")]
+[Authorize(Roles = "Admin,User")]
 public class CategoriesController : ControllerBase
 {
     private readonly ICategoryRepository _categoryRepository;
