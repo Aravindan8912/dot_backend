@@ -1,0 +1,24 @@
+# MySQL only - for running the API locally (dotnet run) and DB in Docker.
+# See RUN-WITH-MYSQL-DOCKER.md for step-by-step.
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: supermarket-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: SuperMarketDb
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 60s
+
+volumes:
+  mysql_data:

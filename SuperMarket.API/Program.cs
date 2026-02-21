@@ -85,7 +85,24 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    // Retry migrations until MySQL is reachable (e.g. when started via Docker Compose).
+    const int maxRetries = 10;
+    const int delayMs = 3000;
+    for (var i = 0; i < maxRetries; i++)
+    {
+        try
+        {
+            db.Database.Migrate();
+            break;
+        }
+        catch (Exception ex) when (i < maxRetries - 1)
+        {
+            if (ex.Message.Contains("Unable to connect", StringComparison.OrdinalIgnoreCase))
+                await Task.Delay(delayMs);
+            else
+                throw;
+        }
+    }
     if (app.Environment.IsDevelopment())
         await scope.ServiceProvider.SeedDefaultAdminIfNeededAsync();
 }

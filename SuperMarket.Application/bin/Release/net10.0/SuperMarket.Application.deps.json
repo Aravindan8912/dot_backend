@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "SuperMarket.Application/1.0.0": {
+        "dependencies": {
+          "SuperMarket.Domain": "1.0.0"
+        },
+        "runtime": {
+          "SuperMarket.Application.dll": {}
+        }
+      },
+      "SuperMarket.Domain/1.0.0": {
+        "runtime": {
+          "SuperMarket.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SuperMarket.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SuperMarket.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
