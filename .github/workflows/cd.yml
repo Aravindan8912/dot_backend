@@ -4,26 +4,38 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  contents: read
+  packages: write   # REQUIRED for GHCR
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
+      # 🔐 Login to GHCR (NO PAT needed)
       - name: Login to GHCR
-        run: echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
+      # 🐳 Build Docker image
       - name: Build Docker image
         run: |
           docker build -t ghcr.io/${{ github.repository_owner }}/supermarket-api:latest .
 
+      # 📦 Push image to GHCR
       - name: Push Docker image
         run: |
           docker push ghcr.io/${{ github.repository_owner }}/supermarket-api:latest
 
-      - name: Deploy to Server
+      # 🚀 Deploy to server
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
