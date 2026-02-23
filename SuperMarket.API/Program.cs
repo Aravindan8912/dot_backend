@@ -1,5 +1,8 @@
+using System.Linq;
 using System.Text;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SuperMarket.Infrastructure;
@@ -14,7 +17,12 @@ using SuperMarket.Application.UseCases.Payments;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.WriteIndented = false;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
@@ -125,8 +133,44 @@ using (var scope = app.Services.CreateScope())
         await scope.ServiceProvider.SeedDefaultAdminIfNeededAsync();
 }
 
-// CORS must be early in the pipeline to handle preflight OPTIONS requests
+// Handle OPTIONS (preflight) first: return 200 + JSON body so no 204 empty response (avoids "Http failure during parsing")
+var allowedOrigins = new[] { "http://localhost:4200", "http://localhost:5173", "http://localhost:3001" };
+app.Use(async (ctx, next) =>
+{
+    if (ctx.Request.Method == "OPTIONS")
+    {
+        var origin = (string?)ctx.Request.Headers["Origin"];
+        if (!string.IsNullOrEmpty(origin) && allowedOrigins.Contains(origin))
+        {
+            ctx.Response.Headers.Append("Access-Control-Allow-Origin", origin);
+            ctx.Response.Headers.Append("Access-Control-Allow-Credentials", "true");
+        }
+        ctx.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+        ctx.Response.Headers.Append("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
+        ctx.Response.Headers.Append("Access-Control-Max-Age", "86400");
+        ctx.Response.StatusCode = StatusCodes.Status200OK;
+        ctx.Response.ContentType = "application/json";
+        await ctx.Response.WriteAsync("{}");
+        return;
+    }
+    await next();
+});
+
+// CORS for non-OPTIONS requests
 app.UseCors("AllowAngularApp");
+
+// Return JSON for all errors so the frontend never gets HTML (avoids "Http failure during parsing")
+app.UseExceptionHandler(errApp =>
+{
+    errApp.Run(async ctx =>
+    {
+        ctx.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        ctx.Response.ContentType = "application/json";
+        var ex = ctx.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>()?.Error;
+        await ctx.Response.WriteAsJsonAsync(new { error = "Internal server error", message = ex?.Message ?? "An error occurred." });
+    });
+});
+
 app.MapOpenApi();
 app.UseHttpsRedirection();
 app.UseAuthentication();

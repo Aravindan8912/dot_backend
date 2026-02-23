@@ -19,6 +19,20 @@ public class ProductRepository : IProductRepository{
     public async Task<IEnumerable<Product>> GetAllAsync()
         => await _context.Products.ToListAsync();
 
+    public async Task<bool> ExistsByNameAndCategoryAsync(string name, Guid categoryId)
+    {
+        var normalized = (name ?? string.Empty).Trim().ToLower();
+        return await _context.Products
+            .AnyAsync(p => p.Name.ToLower() == normalized && p.CategoryId == categoryId);
+    }
+
+    public async Task<bool> ExistsByNameAndCategoryExceptAsync(string name, Guid categoryId, Guid excludeProductId)
+    {
+        var normalized = (name ?? string.Empty).Trim().ToLower();
+        return await _context.Products
+            .AnyAsync(p => p.Id != excludeProductId && p.Name.ToLower() == normalized && p.CategoryId == categoryId);
+    }
+
     public async Task AddAsync(Product product){
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
