@@ -1,9 +1,10 @@
 namespace SuperMarket.Domain.Enums;
 
 public enum OrderStatus{
-    Pending=1,
-    Confirmed=2,
-    Shipped=3,
-    Delivered=4,
-    Cancelled=5
+    PendingPayment=1,
+    Paid=2,
+    PreparedForDelivery=3,
+    OutForDelivery=4,
+    Delivered=5,
+    Cancelled=6
 }
