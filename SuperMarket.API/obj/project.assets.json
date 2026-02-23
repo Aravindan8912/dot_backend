@@ -2469,11 +2469,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\DOT_Backend\\SuperMarket.API\\SuperMarket.API.csproj",
+      "projectUniqueName": "D:\\Supermarket\\DOT_Backend\\SuperMarket.API\\SuperMarket.API.csproj",
       "projectName": "SuperMarket.API",
-      "projectPath": "D:\\DOT_Backend\\SuperMarket.API\\SuperMarket.API.csproj",
+      "projectPath": "D:\\Supermarket\\DOT_Backend\\SuperMarket.API\\SuperMarket.API.csproj",
       "packagesPath": "C:\\Users\\Aravinth\\.nuget\\packages\\",
-      "outputPath": "D:\\DOT_Backend\\SuperMarket.API\\obj\\",
+      "outputPath": "D:\\Supermarket\\DOT_Backend\\SuperMarket.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Aravinth\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -2488,11 +2488,11 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "D:\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj": {
-              "projectPath": "D:\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj"
+            "D:\\Supermarket\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj": {
+              "projectPath": "D:\\Supermarket\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj"
             },
-            "D:\\DOT_Backend\\SuperMarket.Infrastructure\\SuperMarket.Infrastructure.csproj": {
-              "projectPath": "D:\\DOT_Backend\\SuperMarket.Infrastructure\\SuperMarket.Infrastructure.csproj"
+            "D:\\Supermarket\\DOT_Backend\\SuperMarket.Infrastructure\\SuperMarket.Infrastructure.csproj": {
+              "projectPath": "D:\\Supermarket\\DOT_Backend\\SuperMarket.Infrastructure\\SuperMarket.Infrastructure.csproj"
             }
           }
         }
