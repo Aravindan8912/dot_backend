@@ -1,6 +1,6 @@
 # DOT Backend (SuperMarket API)
 
-ASP.NET Core (.NET 10) backend for a SuperMarket application. Clean architecture with Domain, Application, Infrastructure, and API layers. JWT authentication with refresh-token rotation.
+ASP.NET Core (.NET 10) backend for a SuperMarket application. Clean architecture with Domain, Application, Infrastructure, and API layers. JWT authentication with refresh-token rotation. Supports addresses (per customer), payments (per order), and delivery entities (repository and DB; API for delivery can be added when needed).
 
 ---
 
@@ -17,15 +17,19 @@ DOT_Backend/
 │   ├── appsettings.json
 │   ├── appsettings.Development.json
 │   ├── Controllers/
+│   │   ├── AddressControllers.cs
 │   │   ├── AuthController.cs
 │   │   ├── CategoriesController.cs
 │   │   ├── CustomersController.cs
 │   │   ├── OrdersController.cs
+│   │   ├── PaymentController.cs
 │   │   └── ProductsController.cs
 │   └── Requests/
+│       ├── CreateAddressRequest.cs
 │       ├── CreateCategoryRequest.cs
 │       ├── CreateCustomerRequest.cs
 │       ├── CreateOrderRequest.cs
+│       ├── CreatePaymentRequest.cs
 │       ├── CreateProductRequest.cs
 │       ├── LoginRequest.cs
 │       ├── RefreshTokenRequest.cs
@@ -41,15 +45,21 @@ DOT_Backend/
 │   │   ├── UpdateProductDto.cs
 │   │   └── UserLoginDto.cs
 │   ├── Interfaces/
+│   │   ├── IAddressRepository.cs
 │   │   ├── ICategoryRepository.cs
 │   │   ├── ICustomerRepository.cs
+│   │   ├── IDeliveryRepository.cs
 │   │   ├── IOrderRepository.cs
 │   │   ├── IPasswordHasher.cs
+│   │   ├── IPaymentRepository.cs
 │   │   ├── IProductRepository.cs
 │   │   ├── IRefreshTokenRepository.cs
 │   │   ├── ITokenService.cs
 │   │   └── IUserRepository.cs
 │   └── UseCases/
+│       ├── Address/
+│       │   ├── CreateAddressUseCase.cs
+│       │   └── GetAddressesByCustomerIdUseCase.cs
 │       ├── Auth/
 │       │   ├── LoginUseCase.cs
 │       │   ├── RefreshTokenUseCase.cs
@@ -60,6 +70,9 @@ DOT_Backend/
 │       │   └── CreateCustomerUseCase.cs
 │       ├── Orders/
 │       │   └── CreateOrderUseCase.cs
+│       ├── Payments/
+│       │   ├── CreatePaymentUseCase.cs
+│       │   └── GetPaymentByOrderIdUseCase.cs
 │       └── Products/
 │           ├── CreateProductUseCase.cs
 │           └── UpdateProductUseCase.cs
@@ -69,15 +82,20 @@ DOT_Backend/
 │   ├── Common/
 │   │   └── BaseEntitiy.cs
 │   ├── Entities/
+│   │   ├── Address.cs
 │   │   ├── Category.cs
 │   │   ├── Customer.cs
+│   │   ├── Delivery.cs
 │   │   ├── Order.cs
 │   │   ├── OrderItem.cs
+│   │   ├── Payment.cs
 │   │   ├── Product.cs
 │   │   ├── RefreshToken.cs
 │   │   └── User.cs
 │   └── Enums/
+│       ├── DeliveryStatus.cs
 │       ├── OrderStatus.cs
+│       ├── PaymentStatus.cs
 │       └── Role.cs
 │
 └── SuperMarket.Infrastructure/
@@ -87,21 +105,28 @@ DOT_Backend/
     ├── Migrations/
     │   ├── 20260221045820_InitialCreate.cs
     │   ├── 20260221055403_AddAuthAndRefreshTokens.cs
-    │   └── 20260221060000_AddCustomerUserId.cs
+    │   ├── 20260221060000_AddCustomerUserId.cs
+    │   └── 20260223055608_AddAddressPaymentDelivery.cs
     ├── Persistence/
     │   ├── AppDbContext.cs
     │   └── Configurations/
+    │       ├── AddressConfiguration.cs
     │       ├── CategoryConfiguration.cs
     │       ├── CustomerConfiguration.cs
+    │       ├── DeliveryConfiguration.cs
     │       ├── OrderConfiguration.cs
     │       ├── OrderItemConfiguration.cs
+    │       ├── PaymentConfiguration.cs
     │       ├── ProductConfiguration.cs
     │       ├── RefreshTokenConfiguration.cs
     │       └── UserConfiguration.cs
     ├── Repositories/
+    │   ├── AddressRepository.cs
     │   ├── CategoryRepository.cs
     │   ├── CustomerRepository.cs
+    │   ├── DeliveryRepository.cs
     │   ├── OrderRepository.cs
+    │   ├── PaymentRepository.cs
     │   ├── ProductRepository.cs
     │   ├── RefreshTokenRepository.cs
     │   └── UserRepository.cs
@@ -217,6 +242,46 @@ All endpoints require **Admin or User**.
 
 - **POST /api/orders**  
   Body: `{ "customerId": "guid", "items": [ { "productId": "guid", "quantity": number } ] }`
+
+---
+
+### Addresses — `api/addresses`
+
+All endpoints require **Admin or User**.
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/addresses?customerId={guid}` | Get all addresses for a customer. |
+| POST | `/api/addresses` | Create an address for a customer. |
+
+**Request / Response**
+
+- **POST /api/addresses**  
+  Body: `{ "customerId": "guid", "addressLine1": "string", "addressLine2": "string?", "city": "string", "state": "string", "zipCode": "string", "country": "string" }`  
+  Response: `{ "id": "guid", "message": "Address created successfully" }`
+
+- **GET /api/addresses?customerId={guid}**  
+  Response: array of address objects.
+
+---
+
+### Payments — `api/payments`
+
+All endpoints require **Admin or User**.
+
+| Method | Path | Description |
+|--------|------|-------------|
+| GET | `/api/payments?orderId={guid}` | Get payment by order ID (404 if none). |
+| POST | `/api/payments` | Create a payment for an order. |
+
+**Request / Response**
+
+- **POST /api/payments**  
+  Body: `{ "orderId": "guid", "amount": number, "paymentMethod": "string" }`  
+  Response: `{ "id": "guid", "message": "Payment created successfully" }`
+
+- **GET /api/payments?orderId={guid}**  
+  Response: payment object (`id`, `orderId`, `amount`, `status`, `paymentMethod`) or 404.
 
 ---
 
@@ -401,6 +466,8 @@ The API will:
 
 - API base: **http://localhost:3000**
 - OpenAPI spec: **http://localhost:3000/openapi/v1.json**
+
+**Test full flow in Postman (as Admin):** see **[POSTMAN-ADMIN-FLOW.md](POSTMAN-ADMIN-FLOW.md)** for step-by-step requests (login → categories → customers → products → orders → addresses → payments).
 
 ---
 

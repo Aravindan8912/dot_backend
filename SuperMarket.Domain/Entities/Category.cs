@@ -1,8 +1,9 @@
 using SuperMarket.Domain.Common;
 namespace SuperMarket.Domain.Entities;
 
-public class Category : BaseEntity{
-    public string Name { get; private set; }
+public class Category : BaseEntity
+{
+    public string Name { get; private set; } = null!;
 
     private Category(){}
 

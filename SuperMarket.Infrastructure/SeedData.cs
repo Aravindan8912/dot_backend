@@ -7,9 +7,6 @@ namespace SuperMarket.Infrastructure;
 
 public static class SeedData
 {
-    /// <summary>
-    /// Seeds default admin user when no user exists. For development only.
-    /// </summary>
     public static async Task SeedDefaultAdminIfNeededAsync(this IServiceProvider serviceProvider)
     {
         var userRepo = serviceProvider.GetRequiredService<IUserRepository>();

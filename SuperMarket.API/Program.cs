@@ -9,6 +9,8 @@ using SuperMarket.Application.UseCases.Customers;
 using SuperMarket.Application.UseCases.Products;
 using SuperMarket.Application.UseCases.Orders;
 using SuperMarket.Application.UseCases.Auth;
+using SuperMarket.Application.UseCases.Address;
+using SuperMarket.Application.UseCases.Payments;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +31,10 @@ builder.Services.AddScoped<CreateCustomerUseCase>();
 builder.Services.AddScoped<CreateProductUseCase>();
 builder.Services.AddScoped<CreateOrderUseCase>();
 builder.Services.AddScoped<UpdateProductUseCase>();
+builder.Services.AddScoped<CreateAddressUseCase>();
+builder.Services.AddScoped<GetAddressesByCustomerIdUseCase>();
+builder.Services.AddScoped<CreatePaymentUseCase>();
+builder.Services.AddScoped<GetPaymentByOrderIdUseCase>();
 
 // JWT authentication (production-grade: issuer, audience, lifetime validation)
 var jwtSecret = builder.Configuration["Jwt:SecretKey"] ?? throw new InvalidOperationException("Jwt:SecretKey is required.");

@@ -34,10 +34,12 @@ public static class DependencyInjection
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-
+        services.AddScoped<IPaymentRepository, PaymentRepository>();
+        services.AddScoped<IDeliveryRepository, DeliveryRepository>();
+        services.AddScoped<IAddressRepository, AddressRepository>();
         services.AddSingleton<IPasswordHasher, BCryptPasswordHasher>();
         services.AddSingleton<ITokenService, JwtTokenService>();
-
+           
         return services;
     }
 }
