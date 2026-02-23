@@ -18,6 +18,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
+// CORS configuration for frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200", "http://localhost:5173", "http://localhost:3001")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
+
 builder.Services.AddInfrastructure(builder.Configuration);
 
 // Auth use cases
@@ -113,6 +125,8 @@ using (var scope = app.Services.CreateScope())
         await scope.ServiceProvider.SeedDefaultAdminIfNeededAsync();
 }
 
+// CORS must be early in the pipeline to handle preflight OPTIONS requests
+app.UseCors("AllowAngularApp");
 app.MapOpenApi();
 app.UseHttpsRedirection();
 app.UseAuthentication();

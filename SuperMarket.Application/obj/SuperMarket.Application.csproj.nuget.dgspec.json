@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj": {}
+    "D:\\Supermarket\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj": {}
   },
   "projects": {
-    "D:\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj": {
+    "D:\\Supermarket\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj",
+        "projectUniqueName": "D:\\Supermarket\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj",
         "projectName": "SuperMarket.Application",
-        "projectPath": "D:\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj",
+        "projectPath": "D:\\Supermarket\\DOT_Backend\\SuperMarket.Application\\SuperMarket.Application.csproj",
         "packagesPath": "C:\\Users\\Aravinth\\.nuget\\packages\\",
-        "outputPath": "D:\\DOT_Backend\\SuperMarket.Application\\obj\\",
+        "outputPath": "D:\\Supermarket\\DOT_Backend\\SuperMarket.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Aravinth\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -26,8 +26,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\DOT_Backend\\SuperMarket.Domain\\SuperMarket.Domain.csproj": {
-                "projectPath": "D:\\DOT_Backend\\SuperMarket.Domain\\SuperMarket.Domain.csproj"
+              "D:\\Supermarket\\DOT_Backend\\SuperMarket.Domain\\SuperMarket.Domain.csproj": {
+                "projectPath": "D:\\Supermarket\\DOT_Backend\\SuperMarket.Domain\\SuperMarket.Domain.csproj"
               }
             }
           }
@@ -341,14 +341,14 @@
         }
       }
     },
-    "D:\\DOT_Backend\\SuperMarket.Domain\\SuperMarket.Domain.csproj": {
+    "D:\\Supermarket\\DOT_Backend\\SuperMarket.Domain\\SuperMarket.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\DOT_Backend\\SuperMarket.Domain\\SuperMarket.Domain.csproj",
+        "projectUniqueName": "D:\\Supermarket\\DOT_Backend\\SuperMarket.Domain\\SuperMarket.Domain.csproj",
         "projectName": "SuperMarket.Domain",
-        "projectPath": "D:\\DOT_Backend\\SuperMarket.Domain\\SuperMarket.Domain.csproj",
+        "projectPath": "D:\\Supermarket\\DOT_Backend\\SuperMarket.Domain\\SuperMarket.Domain.csproj",
         "packagesPath": "C:\\Users\\Aravinth\\.nuget\\packages\\",
-        "outputPath": "D:\\DOT_Backend\\SuperMarket.Domain\\obj\\",
+        "outputPath": "D:\\Supermarket\\DOT_Backend\\SuperMarket.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Aravinth\\AppData\\Roaming\\NuGet\\NuGet.Config"
