@@ -16,6 +16,9 @@ public class AppDbContext : DbContext{
     public DbSet<OrderItem> OrderItems => Set<OrderItem>();
     public DbSet<User> Users => Set<User>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<Payment> Payments => Set<Payment>();
+    public DbSet<Delivery> Deliveries => Set<Delivery>();
+    public DbSet<Address> Addresses => Set<Address>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder){
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);

@@ -1,3 +1,8 @@
+using SuperMarket.Domain.Common;
+using SuperMarket.Domain.Enums;
+
+namespace SuperMarket.Domain.Entities;
+
 public class Delivery : BaseEntity{
     public Guid OrderId { get; private set; }
     public Guid CustomerId { get; private set; }

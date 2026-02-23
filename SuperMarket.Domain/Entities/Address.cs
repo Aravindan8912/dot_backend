@@ -1,15 +1,20 @@
-public class Address : BaseEntity{
+using SuperMarket.Domain.Common;
+
+namespace SuperMarket.Domain.Entities;
+
+public class Address : BaseEntity
+{
     public Guid CustomerId { get; private set; }
-    public string AddressLine1 { get; private set; }
-    public string AddressLine2 { get; private set; }
-    public string City { get; private set; }
-    public string State { get; private set; }
-    public string ZipCode { get; private set; }
-    public string Country { get; private set; }
+    public string AddressLine1 { get; private set; } = null!;
+    public string AddressLine2 { get; private set; } = null!;
+    public string City { get; private set; } = null!;
+    public string State { get; private set; } = null!;
+    public string ZipCode { get; private set; } = null!;
+    public string Country { get; private set; } = null!;
 
     private Address() { }
 
-    public Address(string customerId, string addressLine1, string addressLine2, string city, string state, string zipCode, string country)
+    public Address(Guid customerId, string addressLine1, string addressLine2, string city, string state, string zipCode, string country)
     {
         Id = Guid.NewGuid();
         CustomerId = customerId;

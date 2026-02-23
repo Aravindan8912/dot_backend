@@ -1,21 +1,24 @@
-public class Payment : BaseEntity{
+using SuperMarket.Domain.Common;
+using SuperMarket.Domain.Enums;
+
+namespace SuperMarket.Domain.Entities;
+
+public class Payment : BaseEntity
+{
     public Guid OrderId { get; private set; }
     public decimal Amount { get; private set; }
     public PaymentStatus Status { get; private set; }
-    public string PaymentMethod { get; private set; }
-    public string TransactionId { get; private set; }
+    public string PaymentMethod { get; private set; } = null!;
 
-    private Payment() { 
-    }
+    private Payment() { }
 
-    public Payment(Guid orderId, decimal amount, PaymentStatus status, string paymentMethod, string transactionId)
+    public Payment(Guid orderId, decimal amount, string paymentMethod)
     {
         Id = Guid.NewGuid();
         OrderId = orderId;
         Amount = amount;
-        Status = status;
         PaymentMethod = paymentMethod;
-        TransactionId = transactionId;
+        Status = PaymentStatus.Pending;
     }   
 
     public void MarkPaid(){
