@@ -12,13 +12,18 @@ public class CreateProductUseCase
         _productRepository = productRepository;
     }
 
-    public async Task ExecuteAsync(
+    public async Task<Product> ExecuteAsync(
         string name,
         decimal price,
         int stock,
         Guid categoryId)
     {
-        var product = new Product(name, price, stock, categoryId);
+        var nameTrimmed = name?.Trim() ?? string.Empty;
+        if (await _productRepository.ExistsByNameAndCategoryAsync(nameTrimmed, categoryId))
+            throw new InvalidOperationException("A product with this name already exists in this category.");
+
+        var product = new Product(nameTrimmed, price, stock, categoryId);
         await _productRepository.AddAsync(product);
+        return product;
     }
 }

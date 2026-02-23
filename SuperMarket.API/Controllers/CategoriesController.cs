@@ -40,6 +40,6 @@ public class CategoriesController : ControllerBase
         var category = await _categoryRepository.GetByIdAsync(id);
         if (category == null)
             return NotFound();
-        return Ok(category);
+        return Ok(new { id = category.Id, name = category.Name });
     }
 }
