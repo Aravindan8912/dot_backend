@@ -1,0 +1,4 @@
+// Expose for WebApplicationFactory in integration/functional tests.
+namespace SuperMarket.API;
+
+public partial class Program { }

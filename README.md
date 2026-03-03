@@ -98,7 +98,7 @@ DOT_Backend/
 │       ├── PaymentStatus.cs
 │       └── Role.cs
 │
-└── SuperMarket.Infrastructure/
+├── SuperMarket.Infrastructure/
     ├── SuperMarket.Infrastructure.csproj
     ├── DependencyInjection.cs
     ├── SeedData.cs
@@ -134,6 +134,26 @@ DOT_Backend/
         ├── BCryptPasswordHasher.cs
         ├── DateTimeService.cs
         └── JwtTokenService.cs
+│
+├── SuperMarket.Tests/
+│   ├── SuperMarket.Tests.csproj
+│   ├── Domain/
+│   │   └── ProductTests.cs
+│   └── Application/
+│       ├── CreateProductUseCaseTests.cs
+│       └── CreateCategoryUseCaseTests.cs
+│
+└── SuperMarket.IntegrationTests/
+    ├── SuperMarket.IntegrationTests.csproj
+    ├── SuperMarketWebApplicationFactory.cs
+    ├── TestHelpers/
+    │   └── HttpTestHelpers.cs
+    ├── Integration/
+    │   ├── AuthIntegrationTests.cs
+    │   ├── CategoriesIntegrationTests.cs
+    │   └── ProductsIntegrationTests.cs
+    └── Functional/
+        └── FullFlowFunctionalTests.cs
 ```
 
 ---
@@ -471,7 +491,56 @@ The API will:
 
 ---
 
-### 7. First Login (Development Seed)
+### 7. Testing (MSTest)
+
+The solution includes **unit**, **integration**, and **functional** tests.
+
+| Project | Purpose |
+|--------|--------|
+| **SuperMarket.Tests** | Unit tests (MSTest + Moq): Domain entities, use cases with mocked repositories. |
+| **SuperMarket.IntegrationTests** | Integration tests: real HTTP pipeline and in-memory DB. Functional tests: multi-step API flows. |
+
+**Run all tests from repo root:**
+
+```bash
+dotnet test
+```
+
+**Run only unit tests:**
+
+```bash
+dotnet test SuperMarket.Tests/SuperMarket.Tests.csproj
+```
+
+**Run only integration and functional tests:**
+
+```bash
+dotnet test SuperMarket.IntegrationTests/SuperMarket.IntegrationTests.csproj
+```
+
+**Run with verbose output:**
+
+```bash
+dotnet test --logger "console;verbosity=detailed"
+```
+
+**Run with code coverage (unit project):**
+
+```bash
+dotnet test SuperMarket.Tests --collect:"XPlat Code Coverage"
+```
+
+**What is covered:**
+
+- **Unit (SuperMarket.Tests):** `Product` entity validation, `CreateProductUseCase`, `CreateCategoryUseCase` with mocked repositories.
+- **Integration:** Auth (login success/fail, validation), Categories (GET/POST/GetById, 401 without token), Products (CRUD, duplicate name → 409).
+- **Functional:** Full flows: login → create category → create product → get products; login → get categories → create product → update product; unauthenticated access → 401.
+
+Integration/functional tests use `WebApplicationFactory` and an **in-memory database**; no MySQL is required.
+
+---
+
+### 8. First Login (Development Seed)
 
 When running in **Development**, the first run seeds an admin user if the table is empty:
 
@@ -493,13 +562,16 @@ Authorization: Bearer <accessToken>
 
 ---
 
-### 8. Quick Reference Commands
+### 9. Quick Reference Commands
 
 | Action | Command |
 |--------|--------|
 | Restore packages | `dotnet restore` |
 | Build | `dotnet build` |
 | Run API | `dotnet run --project SuperMarket.API` |
+| Run all tests | `dotnet test` |
+| Run unit tests only | `dotnet test SuperMarket.Tests/SuperMarket.Tests.csproj` |
+| Run integration/functional tests | `dotnet test SuperMarket.IntegrationTests/SuperMarket.IntegrationTests.csproj` |
 | Run in watch mode | `dotnet watch run --project SuperMarket.API` |
 | Add EF migration | `cd SuperMarket.Infrastructure` then `dotnet ef migrations add <Name> --startup-project ../SuperMarket.API` |
 | Update database from code | Automatic on app startup |

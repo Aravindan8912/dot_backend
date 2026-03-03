@@ -111,23 +111,31 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    // Retry migrations until MySQL is reachable (e.g. when started via Docker Compose).
-    const int maxRetries = 10;
-    const int delayMs = 3000;
-    for (var i = 0; i < maxRetries; i++)
+    if (db.Database.IsRelational())
     {
-        try
+        // Retry migrations until MySQL is reachable (e.g. when started via Docker Compose).
+        const int maxRetries = 10;
+        const int delayMs = 3000;
+        for (var i = 0; i < maxRetries; i++)
         {
-            db.Database.Migrate();
-            break;
+            try
+            {
+                db.Database.Migrate();
+                break;
+            }
+            catch (Exception ex) when (i < maxRetries - 1)
+            {
+                if (ex.Message.Contains("Unable to connect", StringComparison.OrdinalIgnoreCase))
+                    await Task.Delay(delayMs);
+                else
+                    throw;
+            }
         }
-        catch (Exception ex) when (i < maxRetries - 1)
-        {
-            if (ex.Message.Contains("Unable to connect", StringComparison.OrdinalIgnoreCase))
-                await Task.Delay(delayMs);
-            else
-                throw;
-        }
+    }
+    else
+    {
+        // In-memory / test database: ensure schema exists (no migrations).
+        await db.Database.EnsureCreatedAsync();
     }
     if (app.Environment.IsDevelopment())
         await scope.ServiceProvider.SeedDefaultAdminIfNeededAsync();
