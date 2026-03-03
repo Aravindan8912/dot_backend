@@ -3,4 +3,6 @@
   <Project Path="SuperMarket.Application/SuperMarket.Application.csproj" />
   <Project Path="SuperMarket.Domain/SuperMarket.Domain.csproj" />
   <Project Path="SuperMarket.Infrastructure/SuperMarket.Infrastructure.csproj" />
+  <Project Path="SuperMarket.Tests/SuperMarket.Tests.csproj" />
+  <Project Path="SuperMarket.IntegrationTests/SuperMarket.IntegrationTests.csproj" />
 </Solution>
